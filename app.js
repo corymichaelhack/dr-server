@@ -2,6 +2,34 @@ require('dotenv').config(); //to help hide our token signatures
 let express = require('express');
 let app = express();
 
-app.listen(3000, function() {
+//CONTROLLERS
+let artist = require('./controllers/artist-controller');
+let skill = require('./controllers/skill-controller');
+let feedback = require('./controllers/feedback-controller');
+
+let sequelize = require('./db');
+sequelize.sync(); //tip pass in {force:true} for resetting all tables
+
+//APP USE
+app.use(express.json())// to use the req.body middleware
+app.use(require('./middleware/headers'));
+
+// app.use("/test", function(req, res){
+//     res.send("data from server")
+// })
+// EXPOSED ROUTES
+app.use('/', artist); //call artist routes
+
+// PROTECTED ROUTES
+app.use(require('./middleware/validate-session'));
+// app.use('/', skill); //call skill routes
+// app.use('/', feedback); //call feedback routes
+
+
+
+
+
+
+app.listen(3000, () => {
     console.log("Hello from Port 3000");
 })

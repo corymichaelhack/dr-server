@@ -13,4 +13,13 @@ sequelize.authenticate().then(
     }
 );
 
+
+Artist = sequelize.import('./models/artist');
+Skill = sequelize.import('./models/skill');
+
+Skill.belongsTo(Artist);
+Artist.hasMany(Skill);
+
+
+
 module.exports = sequelize;

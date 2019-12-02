@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
     skillType: {
       type: DataTypes.STRING
     },
+    artistId:{
+      type: DataTypes.INTEGER,
+      allowNull:false
+    }
 
   }, {});
   skill.associate = function(models) {

@@ -4,6 +4,7 @@ var sequelize = require('../db');
 var Artist = sequelize.import('../models/artist');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
+const validateSession = require('../middleware/validate-session');
 
 //REGISTER ARTIST 
 router.post('/register', (req, res) => {
@@ -22,7 +23,7 @@ router.post('/register', (req, res) => {
         res.json({
             artist: artist,
             message: 'artist created',
-            // sessionToken: token
+            sessionToken: token
         })
     },
     createError = err => res.send(err))
@@ -39,8 +40,8 @@ router.post('/login', (req, res) => {
                 if (matches){
                     let token = jwt.sign({id: artist.id}, process.env.JWT_SECRET, {expiresIn: 60*60*24})
                     res.json({
-                        // artist: artist,
-                        // message: 'successfully authenticated artist',
+                        artist: artist,
+                        message: 'successfully authenticated artist',
                         sessionToken: token
                     })
                 } else {
@@ -53,5 +54,35 @@ router.post('/login', (req, res) => {
     }, err => res.status(501).send({ error: 'failed to process'})
     )
 })
+
+//*GET ALL ARTISTS*/
+router.get('/getartists', function (req, res) {
+   
+    Artist.findAll()                             //in future, change to ONLY bring back "artists"
+    .then(artist => res.status(200).json(artist))   //
+    .catch(err => res.status(500).json({error:err}))
+})
+
+//*GET ONE ARTIST**/
+router.get('/:id', function (req, res) {
+    let data = req.params.id;
+    Artist.findOne({where: { id: data}})
+    .then(artist => res.status(200).json(artist))   //
+    .catch(err => res.status(500).json({error:err}))
+})
+
+//*DELETE A SPECIFIC ARTISTS
+router.delete('/:id', validateSession, (req, res)=> {                            
+    Artist.destroy({where: {id: req.params.id}})                   
+    .then(artist => res.status(200).json(artist))
+    .catch(err => res.json(req.errors))                 
+})
+
+//**UPDATE A SPECIFIC ARTIST */
+router.put('/:id', validateSession, (req, res) => {    
+    Artist.update(req.body, { where: { id: req.params.id }})           
+      .then(artist => res.status(200).json(artist))
+      .catch(err => res.json(req.errors))
+  })
 
 module.exports = router;

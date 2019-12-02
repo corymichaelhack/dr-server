@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }, 
     role: {
-      type: DataTypes.STRING
+      type: DataTypes.ENUM,
+      values: ['artist', 'admin', 'disabled']
     },
     // Forg
     // skill_id: {

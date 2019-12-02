@@ -19,10 +19,11 @@ app.use(require('./middleware/headers'));
 // })
 // EXPOSED ROUTES
 app.use('/', artist); //call artist routes
+app.use('/skill', skill)  //so anyone can browse skills
 
 // PROTECTED ROUTES
 app.use(require('./middleware/validate-session'));
-// app.use('/', skill); //call skill routes
+app.use('/', skill); //call skill routes
 // app.use('/', feedback); //call feedback routes
 
 
@@ -31,5 +32,5 @@ app.use(require('./middleware/validate-session'));
 
 
 app.listen(3000, () => {
-    console.log("Hello from Port 3000");
+    console.log(`Hello from ${process.env.PORT}.`);
 })

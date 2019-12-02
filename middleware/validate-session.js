@@ -1,35 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Artist = require('../db').import('../models/artist');
 
-// const validateSession = (req, res, next) => {
-//     if (req.method == 'OPTIONS'){
-//         next();
-//     } else {
-//         const token = req.headers.authorization;
-//         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-//             if (!err && decoded){
-//                 Artist.findOne(
-//                     { where: {id: decoded.id} },
-//                     console.log(decoded)
-//                 )
-//                 .then(artist => {
-//                     if(!artist) throw 'err'
-//                     req.artist = artist
-//                     console.log(req.artist)
-//                     return next();
-//                 })
-//                 .catch(err => next(err))
-//             } else {
-//                 req.errors = err
-//                 return res.status(500).send('Not authorized')
-//             }
-//         })
-//     }
-// }
-
-// module.exports = validateSession;
-
-
 module.exports = function (req, res, next) {
     if(req.method =='OPTIONS') {
         next()
@@ -40,8 +11,8 @@ module.exports = function (req, res, next) {
         else {
             jwt.verify(sessionToken, process.env.JWT_SECRET, (err, decoded) => {
                 if(decoded) {
-                    Artist.findOne({where: { id: decoded.id}}).then(user => {
-                        req.user = user;
+                    Artist.findOne({where: { id: decoded.id}}).then(artist => {
+                        req.artist = artist;
                         next();
                     },
                     function() {

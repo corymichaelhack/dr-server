@@ -74,9 +74,38 @@ router.get('/:id', function (req, res) {
     .catch(err => res.status(500).json({error:err}))
 })
 
-//*DELETE SKILL PROFILE FOR SINGLE ARTIST*/
+//*DELETE A SKILL PROFILE*/
+router.delete('/admindelete/:id', validateSession, function (req, res) {
+    Skill.destroy ({
+        where: {id: req.params.id}
+    }).then(artist => res.status(200).json(artist))
+    .catch(err => res.json(req.errors))   
+})
 
-       
+//*DELETES SPECIFIC PROFILE FOR ONE ARTIST*/
+// router.delete('artistdelete/:id', validateSession, function (req, res) {
+//     let skill = req.params.id;
+//     let artistId = req.artist.id;
+
+//     Skill
+//     .destroy ({
+//         where: {id: skill, artistId: artistId}
+//     }).then(
+//         function deleteSkillSuccess() {
+//             res.send("you removed an office")
+//         },
+//         function deleteSkillError(err){
+//             res.send(500, err.message)
+//         }
+//     )
+// })
+
+//**UPDATE SKILL FOR SPECIFIC ARTIST */
+// router.put('/:id', validateSession, (req, res) => {    
+//     Skill.update(req.body, { where: { id: req.params.id }})           
+//       .then(artist => res.status(200).json(artist))
+//       .catch(err => res.json(req.errors))
+//   })
 
 module.exports = router;
 

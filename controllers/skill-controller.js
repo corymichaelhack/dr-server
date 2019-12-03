@@ -101,11 +101,11 @@ router.delete('/admindelete/:id', validateSession, function (req, res) {
 // })
 
 //**UPDATE SKILL FOR SPECIFIC ARTIST */
-// router.put('/:id', validateSession, (req, res) => {    
-//     Skill.update(req.body, { where: { id: req.params.id }})           
-//       .then(artist => res.status(200).json(artist))
-//       .catch(err => res.json(req.errors))
-//   })
+router.put('/updateskill/:id', validateSession, (req, res) => {    
+    Skill.update(req.body, { where: { id: req.params.id }})           
+      .then(skill => res.status(200).json(skill))
+      .catch(err => res.json(req.errors))
+  })
 
 module.exports = router;
 

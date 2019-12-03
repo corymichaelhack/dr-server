@@ -18,7 +18,7 @@ app.use(require('./middleware/headers'));
 //     res.send("data from server")
 // })
 // EXPOSED ROUTES
-app.use('/', artist); //call artist routes
+app.use('/artist', artist); //call artist routes
 app.use('/skill', skill)  //so anyone can browse skills
 
 // PROTECTED ROUTES

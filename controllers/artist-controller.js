@@ -72,17 +72,42 @@ router.get('/:id', function (req, res) {
 })
 
 //*DELETE A SPECIFIC ARTISTS
-router.delete('/:id', validateSession, (req, res)=> {                            
+router.delete('/delete/:id', validateSession, (req, res)=> {                            
     Artist.destroy({where: {id: req.params.id}})                   
     .then(artist => res.status(200).json(artist))
     .catch(err => res.json(req.errors))                 
 })
 
-//**UPDATE A SPECIFIC ARTIST */
-router.put('/:id', validateSession, (req, res) => {    
-    Artist.update(req.body, { where: { id: req.params.id }})           
+//** ADMIN UPDATE A SPECIFIC ARTIST */
+router.put('/adminupdate/:id', validateSession, (req, res) => {  
+    Artist.update({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 13),
+        role: req.body.role,
+        
+    },
+        { where: { id: req.params.id }})           
       .then(artist => res.status(200).json(artist))
       .catch(err => res.json(req.errors))
   })
 
+//**UPDATE A SPECIFIC ARTIST BY SESSION TOKEN */
+router.put('/update/:id', validateSession, function (req, res) {
+    let artist = req.params.id;
+    let artistId = req.artist.id;
+
+    Artist
+    .update ({
+        where: {id: artist, artistId: artistId}
+    }).then(
+        function updateArtistSuccess() {
+            res.send(`you updated artistId${artistId}`)
+        },
+        function updateArtistError(err){
+            res.send(500, err.message)
+        }
+    )
+})
 module.exports = router;

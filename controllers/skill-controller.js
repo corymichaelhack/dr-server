@@ -9,7 +9,7 @@ const validateSession = require('../middleware/validate-session');
 
 
 //*Creates skill profile*/
-router.post('/createskill', validateSession, (req, res) => {
+router.post('/create', validateSession, (req, res) => {
         let title= req.body.title;
         let description= req.body.description;
         let image= req.body.image;
@@ -30,7 +30,7 @@ router.post('/createskill', validateSession, (req, res) => {
 });
 
 //*GET ALL SKILL PROFILES 
-router.get('/getallskills', function (req, res) {
+router.get('/getall', function (req, res) {
    
     Skill.findAll()                           //in future, change to ONLY bring back "artists"
     .then( 
@@ -43,8 +43,8 @@ router.get('/getallskills', function (req, res) {
 )
 })
 
-//*GET ALL SKILL PROFILES for ONE ARTIST
-router.get('/getallskills/:id', function (req, res) {
+//*GET ALL SKILLS PROFILES for ONE ARTIST
+router.get('/getall/:id', function (req, res) {
    
     Skill.findAll({
             where: { 
@@ -82,23 +82,23 @@ router.delete('/admindelete/:id', validateSession, function (req, res) {
     .catch(err => res.json(req.errors))   
 })
 
-//*DELETES SPECIFIC PROFILE FOR ONE ARTIST*/
-// router.delete('artistdelete/:id', validateSession, function (req, res) {
-//     let skill = req.params.id;
-//     let artistId = req.artist.id;
+//*DELETES SPECIFIC SKILL FOR ONE ARTIST*/
+router.delete('/delete/:id', validateSession, function (req, res) {
+    let skill = req.params.id;
+    let artistId = req.artist.id;
 
-//     Skill
-//     .destroy ({
-//         where: {id: skill, artistId: artistId}
-//     }).then(
-//         function deleteSkillSuccess() {
-//             res.send("you removed an office")
-//         },
-//         function deleteSkillError(err){
-//             res.send(500, err.message)
-//         }
-//     )
-// })
+    Skill
+    .destroy ({
+        where: {id: skill, artistId: artistId}
+    }).then(
+        function deleteSkillSuccess() {
+            res.send(`you removed skillId:${skill} from artistId${artistId}`)
+        },
+        function deleteSkillError(err){
+            res.send(500, err.message)
+        }
+    )
+})
 
 //**UPDATE SKILL FOR SPECIFIC ARTIST */
 // router.put('/:id', validateSession, (req, res) => {    

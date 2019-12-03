@@ -5,7 +5,8 @@ let app = express();
 //CONTROLLERS
 let artist = require('./controllers/artist-controller');
 let skill = require('./controllers/skill-controller');
-let feedback = require('./controllers/feedback-controller');
+let buyerFeedback = require('./controllers/buyerFeedback-controller');
+let sellerResponse = require('./controllers/sellerResponse-controller');
 
 let sequelize = require('./db');
 sequelize.sync(); //tip pass in {force:true} for resetting all tables
@@ -25,8 +26,8 @@ app.use('/skill', skill)  //so anyone can browse skills
 app.use(require('./middleware/validate-session'));
 app.use('/artist', artist);
 app.use('/skill', skill); //call skill routes
-// app.use('/', feedback); //call feedback routes
-
+app.use('/feedback', buyerFeedback); //call feedback routes
+app.use('/response', sellerResponse); //call response routes
 
 
 

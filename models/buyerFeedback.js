@@ -1,16 +1,20 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const feedback = sequelize.define('feedback', {
+  const buyerFeedback = sequelize.define('buyerFeedback', {
     rating: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    comments: {
+    comment: {
     type: DataTypes.TEXT
+    },
+    artistId:{
+      type: DataTypes.INTEGER,
+      allowNull:false
     }
   }, {});
-  feedback.associate = function(models) {
+  buyerFeedback.associate = function(models) {
     // associations can be defined here
   };
-  return feedback;
+  return buyerFeedback;
 };

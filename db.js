@@ -16,10 +16,17 @@ sequelize.authenticate().then(
 
 Artist = sequelize.import('./models/artist');
 Skill = sequelize.import('./models/skill');
+BuyerFeedback= sequelize.import('./models/buyerFeedback');
+SellerResponse= sequelize.import('./models/sellerResponse');
 
 Skill.belongsTo(Artist);
 Artist.hasMany(Skill);
 
+BuyerFeedback.belongsTo(Artist);
+Artist.hasMany(BuyerFeedback);
+
+SellerResponse.belongsTo(Artist);
+Artist.hasMany(SellerResponse);
 
 
 module.exports = sequelize;

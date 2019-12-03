@@ -25,8 +25,9 @@ Artist.hasMany(Skill);
 BuyerFeedback.belongsTo(Artist);
 Artist.hasMany(BuyerFeedback);
 
-SellerResponse.belongsTo(Artist);
-Artist.hasMany(SellerResponse);
+BuyerFeedback.hasOne(SellerResponse);
+SellerResponse.belongsTo(BuyerFeedback);
+
 
 
 module.exports = sequelize;

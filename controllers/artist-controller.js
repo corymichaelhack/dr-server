@@ -103,7 +103,6 @@ router.put('/adminupdate/:id', validateSession, (req, res) => {
 router.put('/update/:id', validateSession, function (req, res) {
     let artist = req.params.id;
     let artistId = req.artist.id;
-
     let firstName = req.body.firstName;
     let lastName = req.body.lastName;
     let email = req.body.email;

@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     comment: {
     type: DataTypes.TEXT
     },
-    artistId:{
+    buyerFeedbackId:{
       type: DataTypes.INTEGER,
       allowNull:false
     }

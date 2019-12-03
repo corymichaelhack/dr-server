@@ -16,7 +16,6 @@ router.post('/create', validateSession, (req, res) => {
         let price= req.body.price;
         let skillType= req.body.skillType;
         let artistId= req.artist.id;
-    
 
     Skill.create({
         title: title,
@@ -74,7 +73,7 @@ router.get('/:id', function (req, res) {
     .catch(err => res.status(500).json({error:err}))
 })
 
-//*DELETE A SKILL PROFILE*/
+//*ADMIN DELETE A SKILL PROFILE*/
 router.delete('/admindelete/:id', validateSession, function (req, res) {
     Skill.destroy ({
         where: {id: req.params.id}

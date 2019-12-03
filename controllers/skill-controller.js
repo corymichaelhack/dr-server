@@ -1,18 +1,37 @@
 var express = require('express');
 var router = express.Router();
+var multer = require('multer');
 var sequelize = require('../db');
-var Artist = sequelize.import('../models/artist');
 var Skill = sequelize.import('../models/skill');
-var bcrypt = require('bcryptjs');
-var jwt = require('jsonwebtoken');
 const validateSession = require('../middleware/validate-session');
+// const imageFilterHelper = require('../middleware/imageFilters');
+
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, '../server/images')
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.fieldname + '-' + Date.now())
+    }
+});
+var upload = multer({
+    storage: storage, 
+    fileFilter: (req, file, cb) => {
+    if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
+        cb(null, true);
+    } else {
+        cb(null, false);
+        return cb(new Error('Allowed only .png, .jpg, .jpeg and .gif'));
+    }
+}});
 
 
 //*Creates skill profile*/
-router.post('/create', validateSession, (req, res) => {
+router.post('/create', upload.single("image"), validateSession, (req, res) => {
+        const url = req.protocol + '://' + req.get("host");
         let title= req.body.title;
         let description= req.body.description;
-        let image= req.body.image;
+        let image= url + "/images/" + req.file.filename
         let price= req.body.price;
         let skillType= req.body.skillType;
         let artistId= req.artist.id;

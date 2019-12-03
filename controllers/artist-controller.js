@@ -101,7 +101,7 @@ router.put('/adminupdate/:id', validateSession, (req, res) => {
 
 //**UPDATE A SPECIFIC ARTIST BY SESSION TOKEN */
 router.put('/update/:id', validateSession, function (req, res) {
-    let artist = req.params.id;
+    let updateArtistId = req.params.id;
     let artistId = req.artist.id;
     let firstName = req.body.firstName;
     let lastName = req.body.lastName;
@@ -110,8 +110,11 @@ router.put('/update/:id', validateSession, function (req, res) {
     let role = req.body.role;
     console.log()
 
-
-    Artist
+    
+    if (updateArtistId !== artistId){
+        console.log("not a valid update")
+    } else {
+        Artist
     .update (
         {
             firstName: firstName,
@@ -121,7 +124,7 @@ router.put('/update/:id', validateSession, function (req, res) {
             role: role
         },
         {
-        where: {id: artist, artistId: artistId}
+        where: { id: artistId }
     }).then(
         function updateArtistSuccess() {
             res.send(`you updated`)
@@ -130,5 +133,6 @@ router.put('/update/:id', validateSession, function (req, res) {
             res.send(500, err.message)
         }
     )
+    }
 })
 module.exports = router;

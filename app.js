@@ -1,19 +1,25 @@
 require('dotenv').config(); //to help hide our token signatures
 let express = require('express');
 let app = express();
+let aws= require('aws-sdk');
+const S3_BUCKET = process.env.S3_BUCKET;
+
 
 //CONTROLLERS
 let artist = require('./controllers/artist-controller');
 let skill = require('./controllers/skill-controller');
 let buyerFeedback = require('./controllers/buyerFeedback-controller');
 let sellerResponse = require('./controllers/sellerResponse-controller');
+let imageUpload = require('./routes/image-upload')
 
 let sequelize = require('./db');
 sequelize.sync(); //tip pass in {force:true} for resetting all tables
 
 //APP USE
 app.use(express.json())// to use the req.body middleware
+
 app.use(require('./middleware/headers'));
+app.use('/images', imageUpload)
 
 // app.use("/test", function(req, res){
 //     res.send("data from server")

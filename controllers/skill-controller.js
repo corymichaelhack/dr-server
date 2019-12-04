@@ -6,6 +6,8 @@ var Skill = sequelize.import('../models/skill');
 const validateSession = require('../middleware/validate-session');
 // const imageFilterHelper = require('../middleware/imageFilters');
 
+
+//**Below code only works locally */
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, '../server/images')
@@ -126,5 +128,4 @@ router.put('/updateskill/:id', validateSession, (req, res) => {
   })
 
 module.exports = router;
-
 

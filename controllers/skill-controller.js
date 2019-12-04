@@ -4,7 +4,6 @@ var multer = require('multer');
 var sequelize = require('../db');
 var Skill = sequelize.import('../models/skill');
 const validateSession = require('../middleware/validate-session');
-// const imageFilterHelper = require('../middleware/imageFilters');
 
 
 //**Below code only works locally */

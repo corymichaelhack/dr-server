@@ -9,7 +9,7 @@ module.exports = function (req, res, next) {
         console.log(sessionToken)  //delete this later
         if (!sessionToken) return res.status(403).send({auth: false, message: 'No token provided'});
         else {
-            jwt.verify(sessionToken, process.env.JWT_SECRET, (err, decoded) => {
+            jwt.verify(sessionToken, 'something', (err, decoded) => {
                 if(decoded) {
                     Artist.findOne({where: { id: decoded.id}}).then(artist => {
                         req.artist = artist;

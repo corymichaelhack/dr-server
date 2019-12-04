@@ -107,8 +107,6 @@ router.put('/update/:id', validateSession, function (req, res) {
     let password = req.body.password;
     let role = req.body.role;
     
-
-
     if (updateArtistId != artistId){
         res.send("This is not a valid update")
     } else {
@@ -133,5 +131,5 @@ router.put('/update/:id', validateSession, function (req, res) {
         }
     )
     }
-)
+})
 module.exports = router;

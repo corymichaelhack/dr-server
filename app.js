@@ -33,6 +33,6 @@ app.use('/response', sellerResponse); //call response routes
 
 
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
     console.log(`Hello from ${process.env.PORT}.`);
 })

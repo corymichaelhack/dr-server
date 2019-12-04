@@ -101,13 +101,15 @@ router.put('/adminupdate/:id', validateSession, (req, res) => {
 
 //**UPDATE A SPECIFIC ARTIST BY SESSION TOKEN *///This lets anyone update currently, even if it is not your sessionToken
 router.put('/update/:id', validateSession, function (req, res) {
+    let vsArtistId = req.artist.id;
+    let artistId = req.params.id;
     let firstName = req.body.firstName;
     let lastName = req.body.lastName;
     let email = req.body.email;
     let password = req.body.password;
     let role = req.body.role;
     
-    if (updateArtistId != artistId){
+    if (vsArtistId != artistId){
         res.send("This is not a valid update")
     } else {
 

@@ -26,7 +26,7 @@ const validateSession = require('../middleware/validate-session');
 //     }
 // }});
 
-
+//testing that this is updating.
 //*Creates skill profile*/
 // router.post('/create', upload.single("image"), validateSession, (req, res) => {
     router.post('/create', validateSession, (req, res) => {

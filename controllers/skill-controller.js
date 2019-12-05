@@ -54,9 +54,8 @@ const validateSession = require('../middleware/validate-session');
 //*GET ALL SKILL PROFILES 
 router.get('/getall', function (req, res) {
    
-    Skill.findAll()                           //in future, change to ONLY bring back "artists"
-    .then( 
-        function findAllSuccess(data) {
+    Skill.findAll({include: 'artist'})                           
+        .then(function findAllSuccess(data) {
         res.json(data)
     },
     function findAllError(err){

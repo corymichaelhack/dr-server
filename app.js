@@ -9,15 +9,8 @@ const cors = require('cors');
 //CONTROLLERS
 let artist = require('./controllers/artist-controller');
 let skill = require('./controllers/skill-controller');
-let feedback = require('./controllers/feedback-controller');
 let config = require('./config');
 let aws= require('aws-sdk');
-
-
-
-//CONTROLLERS
-let artist = require('./controllers/artist-controller');
-let skill = require('./controllers/skill-controller');
 let buyerFeedback = require('./controllers/buyerFeedback-controller');
 let sellerResponse = require('./controllers/sellerResponse-controller');
 let imageUpload = require('./routes/image-upload')

@@ -3,6 +3,7 @@ var router = express.Router();
 var multer = require('multer');
 var sequelize = require('../db');
 var Skill = sequelize.import('../models/skill');
+var Artist = sequelize.import('../models/artist');
 const validateSession = require('../middleware/validate-session');
 
 

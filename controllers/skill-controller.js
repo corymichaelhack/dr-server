@@ -6,33 +6,35 @@ var Skill = sequelize.import('../models/skill');
 const validateSession = require('../middleware/validate-session');
 
 
-//**Below code only works locally */
-var storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, '../server/images')
-    },
-    filename: (req, file, cb) => {
-      cb(null, file.fieldname + '-' + Date.now())
-    }
-});
-var upload = multer({
-    storage: storage, 
-    fileFilter: (req, file, cb) => {
-    if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
-        cb(null, true);
-    } else {
-        cb(null, false);
-        return cb(new Error('Allowed only .png, .jpg, .jpeg and .gif'));
-    }
-}});
+// //**Below code only works locally */
+// var storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//       cb(null, '../server/images')
+//     },
+//     filename: (req, file, cb) => {
+//       cb(null, file.fieldname + '-' + Date.now())
+//     }
+// });
+// var upload = multer({
+//     storage: storage, 
+//     fileFilter: (req, file, cb) => {
+//     if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
+//         cb(null, true);
+//     } else {
+//         cb(null, false);
+//         return cb(new Error('Allowed only .png, .jpg, .jpeg and .gif'));
+//     }
+// }});
 
 
 //*Creates skill profile*/
-router.post('/create', upload.single("image"), validateSession, (req, res) => {
-        const url = req.protocol + '://' + req.get("host");
+// router.post('/create', upload.single("image"), validateSession, (req, res) => {
+    router.post('/create', validateSession, (req, res) => {
+        // const url = req.protocol + '://' + req.get("host");
         let title= req.body.title;
         let description= req.body.description;
-        let image= url + "/images/" + req.file.filename
+        // let image= url + "/images/" + req.file.filename '[l;'
+        let image = req.body.image;
         let price= req.body.price;
         let skillType= req.body.skillType;
         let artistId= req.artist.id;

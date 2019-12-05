@@ -1,8 +1,8 @@
 require('dotenv').config(); //to help hide our token signatures
 let express = require('express');
 let app = express();
-// let aws= require('aws-sdk');
-// const S3_BUCKET = process.env.S3_BUCKET;
+let aws= require('aws-sdk');
+
 
 
 //CONTROLLERS
@@ -19,7 +19,7 @@ sequelize.sync(); //tip pass in {force:true} for resetting all tables
 app.use(express.json())// to use the req.body middleware
 
 app.use(require('./middleware/headers'));
-// app.use('/images', imageUpload)
+
 
 // app.use("/test", function(req, res){
 //     res.send("data from server")
@@ -30,6 +30,7 @@ app.use('/skill', skill)  //so anyone can browse skills
 
 // PROTECTED ROUTES
 app.use(require('./middleware/validate-session'));
+// app.use('/images', imageUpload)
 app.use('/artist', artist);
 app.use('/skill', skill); //call skill routes
 app.use('/feedback', buyerFeedback); //call feedback routes

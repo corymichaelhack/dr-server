@@ -17,7 +17,7 @@ router.post('/register', (req, res) => {
     }).then(
         createSuccess = (artist) => {
             
-            let token = jwt.sign({id: artist.id}, "something", {expiresIn: 60*60*24})
+            let token = jwt.sign({id: artist.id}, process.env.JWT_SECRET, {expiresIn: 60*60*24})
            
             console.log(token);
         res.json({

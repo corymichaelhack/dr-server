@@ -1,17 +1,19 @@
 require('dotenv').config(); //to help hide our token signatures
 let express = require('express');
 let app = express();
-let aws= require('aws-sdk');
 
-
-
+const path = require('path');
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
+const cors = require('cors');
 //CONTROLLERS
 let artist = require('./controllers/artist-controller');
 let skill = require('./controllers/skill-controller');
+let config = require('./config');
+let aws= require('aws-sdk');
 let buyerFeedback = require('./controllers/buyerFeedback-controller');
 let sellerResponse = require('./controllers/sellerResponse-controller');
 let imageUpload = require('./routes/image-upload')
-
 let sequelize = require('./db');
 sequelize.sync(); //tip pass in {force:true} for resetting all tables
 
@@ -19,6 +21,10 @@ sequelize.sync(); //tip pass in {force:true} for resetting all tables
 app.use(express.json())// to use the req.body middleware
 
 app.use(require('./middleware/headers'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(methodOverride('X-HTTP-Method-Override'));
+app.use(cors());
 
 
 // app.use("/test", function(req, res){
@@ -33,10 +39,24 @@ app.use(require('./middleware/validate-session'));
 // app.use('/images', imageUpload)
 app.use('/artist', artist);
 app.use('/skill', skill); //call skill routes
+
+// app.use('/', feedback); //call feedback routes
+
+if (process.env.NODE_ENV !== 'dev') {
+    app.use('/', express.static(path.join(__dirname, './dist')));
+  }
+  
+require('./api')(app, config);
+
+if (process.env.NODE_ENV !== 'dev') {
+    app.get('*', function(req, res) {
+      res.sendFile(path.join(__dirname, '/dist/index.html'));
+    });
+  }
+  
+
 app.use('/feedback', buyerFeedback); //call feedback routes
 app.use('/response', sellerResponse); //call response routes
-
-
 
 
 

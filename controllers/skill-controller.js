@@ -86,7 +86,7 @@ router.get('/getall/:id', function (req, res) {
 router.get('/:id', function (req, res) {
     Skill.findOne({
         where: { 
-            id: req.params.id  
+            id: req.params.id
         },
         include: 'artist'
     })

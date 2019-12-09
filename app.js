@@ -11,11 +11,14 @@ let artist = require('./controllers/artist-controller');
 let skill = require('./controllers/skill-controller');
 let config = require('./config');
 let aws= require('aws-sdk');
+<<<<<<< HEAD
 
 
 
 //CONTROLLERS
 
+=======
+>>>>>>> 39554901fe6565e4c5ee473b26f8ef7fab6ede39
 let buyerFeedback = require('./controllers/buyerFeedback-controller');
 let sellerResponse = require('./controllers/sellerResponse-controller');
 let imageUpload = require('./routes/image-upload')

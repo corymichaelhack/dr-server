@@ -86,14 +86,14 @@ router.get('/getall/:id', function (req, res) {
 router.get('/:id', function (req, res) {
     Skill.findOne({
         where: { 
-            artistId: req.params.id
-            
+            id: req.params.id
         },
         include: 'artist'
     })
     .then(artist => res.status(200).json(artist))   //
     .catch(err => res.status(500).json({error:err}))
 })
+
 
 //*ADMIN DELETE A SKILL PROFILE*/
 router.delete('/admindelete/:id', validateSession, function (req, res) {

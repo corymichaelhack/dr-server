@@ -18,12 +18,13 @@ router.post('/create', validateSession, (req, res) => {
 });
 
 //*GET ALL FEEDBACK for ONE BUYER 
-router.get('/getall/:id', function (req, res) {
+router.get('/:id', function (req, res) {
    
    BuyerFeedback.findAll({
             where: { 
                 artistId: req.params.id  
             },
+            include: 'artist'
     })                           
     .then( 
         function findAllSuccess(data) {

@@ -11,6 +11,7 @@ module.exports = function (req, res, next) {
         else {
             jwt.verify(sessionToken, process.env.JWT_SECRET, (err, decoded) => {
                 if(decoded) {
+                    console.log('work')
                     Artist.findOne({where: { id: decoded.id}}).then(artist => {
                         req.artist = artist;
                         next();
@@ -19,6 +20,7 @@ module.exports = function (req, res, next) {
                         res.status(401).send({error: 'Not authorized, no matching user found'})
                     })
                 } else {
+                    console.log('NOOO work')
                     res.status(400).send({error: 'No value for decoded password'})
                 }
             })

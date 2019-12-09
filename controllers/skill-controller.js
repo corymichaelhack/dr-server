@@ -1,22 +1,44 @@
 var express = require('express');
 var router = express.Router();
+var multer = require('multer');
 var sequelize = require('../db');
-var Artist = sequelize.import('../models/artist');
 var Skill = sequelize.import('../models/skill');
-var bcrypt = require('bcryptjs');
-var jwt = require('jsonwebtoken');
+var Artist = sequelize.import('../models/artist');
 const validateSession = require('../middleware/validate-session');
 
 
+// //**Below code only works locally */
+// var storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//       cb(null, '../server/images')
+//     },
+//     filename: (req, file, cb) => {
+//       cb(null, file.fieldname + '-' + Date.now())
+//     }
+// });
+// var upload = multer({
+//     storage: storage, 
+//     fileFilter: (req, file, cb) => {
+//     if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "image/gif") {
+//         cb(null, true);
+//     } else {
+//         cb(null, false);
+//         return cb(new Error('Allowed only .png, .jpg, .jpeg and .gif'));
+//     }
+// }});
+
+//testing that this is updating again. and again.
 //*Creates skill profile*/
-router.post('/create', validateSession, (req, res) => {
+// router.post('/create', upload.single("image"), validateSession, (req, res) => {
+    router.post('/create', validateSession, (req, res) => {
+        // const url = req.protocol + '://' + req.get("host");
         let title= req.body.title;
         let description= req.body.description;
-        let image= req.body.image;
+        // let image= url + "/images/" + req.file.filename '[l;'
+        let image = req.body.image;
         let price= req.body.price;
         let skillType= req.body.skillType;
         let artistId= req.artist.id;
-    
 
     Skill.create({
         title: title,
@@ -32,9 +54,8 @@ router.post('/create', validateSession, (req, res) => {
 //*GET ALL SKILL PROFILES 
 router.get('/getall', function (req, res) {
    
-    Skill.findAll()                           //in future, change to ONLY bring back "artists"
-    .then( 
-        function findAllSuccess(data) {
+    Skill.findAll({include: 'artist'})                           
+        .then(function findAllSuccess(data) {
         res.json(data)
     },
     function findAllError(err){
@@ -65,8 +86,7 @@ router.get('/getall/:id', function (req, res) {
 router.get('/:id', function (req, res) {
     Skill.findOne({
         where: { 
-            artistId: req.params.id
-            
+            id: req.params.id
         },
         include: 'artist'
     })
@@ -74,7 +94,8 @@ router.get('/:id', function (req, res) {
     .catch(err => res.status(500).json({error:err}))
 })
 
-//*DELETE A SKILL PROFILE*/
+
+//*ADMIN DELETE A SKILL PROFILE*/
 router.delete('/admindelete/:id', validateSession, function (req, res) {
     Skill.destroy ({
         where: {id: req.params.id}
@@ -108,5 +129,4 @@ router.put('/updateskill/:id', validateSession, (req, res) => {
   })
 
 module.exports = router;
-
 

@@ -16,7 +16,8 @@ router.post('/register', (req, res) => {
         role: req.body.role
     }).then(
         createSuccess = (artist) => {
-            let token = jwt.sign({id: artist.id}, "something", {expiresIn: 60*60*24})
+
+            let token = jwt.sign({id: artist.id}, process.env.JWT_SECRET, {expiresIn: 60*60*24});
            
             console.log(token);
         res.json({
@@ -79,34 +80,58 @@ router.delete('/delete/:id', validateSession, (req, res)=> {
 
 //** ADMIN UPDATE A SPECIFIC ARTIST */
 router.put('/adminupdate/:id', validateSession, (req, res) => {  
+    let id = req.params.id
+    let firstName = req.body.firstName;
+    let lastName = req.body.lastName;
+    let email = req.body.email;
+    let password = req.body.password;
+    let role = req.body.role;
+
     Artist.update({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, 13),
-        role: req.body.role,
-        
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: bcrypt.hashSync(password, 13),
+        role: role
     },
-        { where: { id: req.params.id }})           
+         {where: { id: id }})
       .then(artist => res.status(200).json(artist))
       .catch(err => res.json(req.errors))
   })
 
-//**UPDATE A SPECIFIC ARTIST BY SESSION TOKEN */
+//**UPDATE A SPECIFIC ARTIST BY SESSION TOKEN *///This lets anyone update currently, even if it is not your sessionToken
 router.put('/update/:id', validateSession, function (req, res) {
-    let artist = req.params.id;
-    let artistId = req.artist.id;
+    let vsArtistId = req.artist.id;
+    let artistId = req.params.id;
+    let firstName = req.body.firstName;
+    let lastName = req.body.lastName;
+    let email = req.body.email;
+    let password = req.body.password;
+    let role = req.body.role;
+    
+    if (vsArtistId != artistId){
+        res.send("This is not a valid update")
+    } else {
 
-    Artist
-    .update ({
-        where: {id: artist, artistId: artistId}
+        Artist
+    .update (
+        {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: bcrypt.hashSync(password, 13),
+            role: role
+        },
+        {
+        where: { id: req.params.id }
     }).then(
         function updateArtistSuccess() {
-            res.send(`you updated artistId${artistId}`)
+            res.send(`you updated`)
         },
         function updateArtistError(err){
             res.send(500, err.message)
         }
     )
+    }
 })
 module.exports = router;

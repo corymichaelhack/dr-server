@@ -8,6 +8,7 @@ const methodOverride = require('method-override');
 const cors = require('cors');
 //CONTROLLERS
 let artist = require('./controllers/artist-controller');
+let artistCreds = require('./controllers/artist-creds-controller');
 let skill = require('./controllers/skill-controller');
 let config = require('./config');
 let aws= require('aws-sdk');
@@ -33,15 +34,18 @@ app.use(cors());
 // })
 // EXPOSED ROUTES
 app.use('/artist', artist); //call artist routes
+app.use('/auth', artistCreds); //log artist credentials
 app.use('/skill', skill)  //so anyone can browse skills
 app.use('/feedback', buyerFeedback);
 app.use('/response', sellerResponse);
 
 // PROTECTED ROUTES
 app.use(require('./middleware/validate-session'));
+
 // app.use('/images', imageUpload)
 app.use('/artist', artist);
 app.use('/skill', skill); //call skill routes
+
 
 // app.use('/', feedback); //call feedback routes
 

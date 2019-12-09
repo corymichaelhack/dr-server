@@ -18,7 +18,7 @@ router.post('/create', validateSession, (req, res) => {
 });
 
 //*GET ALL FEEDBACK for ONE BUYER 
-router.get('/getall/:id', function (req, res) {
+router.get('/:id', function (req, res) {
    
    BuyerFeedback.findAll({
             where: { 
@@ -63,28 +63,28 @@ router.delete('/delete/:id', validateSession, function (req, res) {
 })
 
 //**ADMIN UPDATE BUYER FEEDBACK FOR SPECIFIC ARTIST */
-// router.put('/updatefeedback/:id', validateSession, (req, res) => {    
-//     BuyerFeedback.update(req.body, { where: { id: req.params.id }})          
-//       .then(feedback => res.status(200).json(feedback))
-//       .catch(err => res.json(req.errors))
-//   })
+router.put('/adminupdate/:id', validateSession, (req, res) => {    
+    BuyerFeedback.update(req.body, { where: { id: req.params.id }})           
+      .then(feedback => res.status(200).json(feedback))
+      .catch(err => res.json(req.errors))
+  })
 
-//*UPDATE SPECIFIC SKILL FOR ONE ARTIST*///DOES WORK, although it always give success message even when it doesn't work.Work on why.
-router.put('/update/:id', validateSession, function (req, res) {
-    let feedback = req.params.id;
-    let artistId = req.artist.id;
-    // console.log(feedback)
-    BuyerFeedback
-    .update (req.body, {
-        where: {id: feedback, artistId: artistId}
-    }).then(
-        function updateFeedbackSuccess() {
-            res.send(`you updated artistId:${feedback} from artistId${artistId}`)
-        },
-        function updateFeedbackError(err){
-            res.send(500, err.message)
-        }
-    )
-})
+//*UPDATE SPECIFIC SKILL FOR ONE ARTIST*///not working
+// router.put('/updatefeedback/:id', validateSession, function (req, res) {
+//     let feedback = req.params.id;
+//     let artistId = req.artist.id;
+//     // console.log(feedback)
+//     BuyerFeedback
+//     .update ({
+//         where: {id: feedback, artistId: artistId}
+//     }).then(
+//         function updateFeedbackSuccess() {
+//             res.send(`you updated artistId:${feedback} from artistId${artistId}`)
+//         },
+//         function updateFeedbackError(err){
+//             res.send(500, err.message)
+//         }
+//     )
+// })
 
 module.exports = router;

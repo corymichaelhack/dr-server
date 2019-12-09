@@ -34,6 +34,8 @@ app.use(cors());
 // EXPOSED ROUTES
 app.use('/artist', artist); //call artist routes
 app.use('/skill', skill)  //so anyone can browse skills
+app.use('/feedback', buyerFeedback);
+app.use('/response', sellerResponse);
 
 // PROTECTED ROUTES
 app.use(require('./middleware/validate-session'));

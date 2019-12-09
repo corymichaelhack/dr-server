@@ -31,7 +31,8 @@ app.use('/skill', skill)  //so anyone can browse skills
 
 // PROTECTED ROUTES
 app.use(require('./middleware/validate-session'));
-app.use('/skill', skill); //call skill routes
+// app.use('/skill', skill); //call skill routes
+
 // app.use('/', feedback); //call feedback routes
 
 if (process.env.NODE_ENV !== 'dev') {

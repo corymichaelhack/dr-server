@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     comment: {
     type: DataTypes.TEXT
     },
-    artistId:{
+    skillId:{
       type: DataTypes.INTEGER,
       allowNull:false
     }

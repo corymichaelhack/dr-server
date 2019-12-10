@@ -22,11 +22,11 @@ SellerResponse= sequelize.import('./models/sellerResponse');
 Skill.belongsTo(Artist);
 Artist.hasMany(Skill);
 
-BuyerFeedback.belongsTo(Artist);
-Artist.hasMany(BuyerFeedback);
+BuyerFeedback.belongsTo(Skill);
+Skill.hasMany(BuyerFeedback);
 
-BuyerFeedback.hasOne(SellerResponse);
-SellerResponse.belongsTo(BuyerFeedback);
+// BuyerFeedback.hasOne(SellerResponse);
+// SellerResponse.belongsTo(BuyerFeedback);
 
 
 

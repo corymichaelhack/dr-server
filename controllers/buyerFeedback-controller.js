@@ -5,11 +5,11 @@ const BuyerFeedback = sequelize.import('../models/buyerFeedback')
 const validateSession = require('../middleware/validate-session');
 
 //*Creates buyer feedback*/
-router.post('/create', validateSession, (req, res) => {
+router.post('/create/:id', validateSession, (req, res) => {
     const feedbackFromRequest ={
         rating: req.body.rating,
         comment: req.body.comment,
-        artistId: req.artist.id
+        skillId: req.params.id
     }
     console.log(feedbackFromRequest)
     BuyerFeedback.create(feedbackFromRequest)
@@ -19,12 +19,13 @@ router.post('/create', validateSession, (req, res) => {
 
 //*GET ALL FEEDBACK for ONE BUYER 
 router.get('/:id', function (req, res) {
-   
+    let skillId = req.params.id;
+
    BuyerFeedback.findAll({
             where: { 
-                artistId: req.params.id  
+                skillId: skillId  
             },
-            include: 'artist'
+            include: 'skill'
     })                           
     .then( 
         function findAllSuccess(data) {

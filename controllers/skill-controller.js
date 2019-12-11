@@ -70,7 +70,7 @@ router.get('/getall/:id', function (req, res) {
     Skill.findAll({
             where: { 
                 artistId: req.params.id  
-            },
+            }, include: 'artist'
     })                           
     .then( 
         function findAllSuccess(data) {

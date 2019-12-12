@@ -16,7 +16,7 @@ let buyerFeedback = require('./controllers/buyerFeedback-controller');
 let sellerResponse = require('./controllers/sellerResponse-controller');
 let imageUpload = require('./routes/image-upload')
 let sequelize = require('./db');
-sequelize.sync({force:true}); //tip pass in {force:true} for resetting all tables
+sequelize.sync(); //tip pass in {force:true} for resetting all tables
 
 //APP USE
 app.use(express.json())// to use the req.body middleware

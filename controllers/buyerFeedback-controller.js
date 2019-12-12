@@ -11,7 +11,8 @@ router.post('/create/:id', validateSession, (req, res) => {
     const feedbackFromRequest ={
         rating: req.body.rating,
         comment: req.body.comment,
-        skillId: skillId
+        skillId: skillId,
+        artistId: req.artist.id
         
     }
     console.log(feedbackFromRequest)

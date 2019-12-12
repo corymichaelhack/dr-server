@@ -15,7 +15,12 @@ module.exports = (sequelize, DataTypes) => {
     skillId:{
       type: DataTypes.INTEGER,
       allowNull:false
+    },
+    skillId:{
+      type: DataTypes.INTEGER,
+      allowNull:false
     }
+    
   }, {});
   buyerFeedback.associate = function(models) {
     // associations can be defined here

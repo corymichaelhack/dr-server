@@ -7,14 +7,16 @@ const validateSession = require('../middleware/validate-session');
 //*Creates buyer feedback*/
 router.post('/create/:id', validateSession, (req, res) => {
     let skillId = req.params.id
+    let artistId = req.artist.id
     skillId = parseInt(skillId)
     const feedbackFromRequest ={
         rating: req.body.rating,
         comment: req.body.comment,
         skillId: skillId,
-        artistId: req.artist.id
+        artistId: artistId
         
     }
+    console.log(artistId)
     console.log(feedbackFromRequest)
     BuyerFeedback.create(feedbackFromRequest)
     .then(buyerfeedback => res.status(200).json(buyerfeedback))
@@ -57,14 +59,8 @@ router.delete('/delete/:id', validateSession, function (req, res) {
     BuyerFeedback
     .destroy ({
         where: {id: feedback, artistId: artistId}
-    }).then(
-        function deleteFeedbackSuccess() {
-            res.send(`you removed feedbackId:${feedback} from artistId${artistId}`)
-        },
-        function deleteFeedbackError(err){
-            res.send(500, err.message)
-        }
-    )
+    }).then(feedback => res.status(200).json(feedback))
+    .catch(err => res.json(req.errors)) 
 })
 
 //**ADMIN UPDATE BUYER FEEDBACK FOR SPECIFIC ARTIST */

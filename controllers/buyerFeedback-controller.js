@@ -6,12 +6,14 @@ const validateSession = require('../middleware/validate-session');
 
 //*Creates buyer feedback*/
 router.post('/create/:id', validateSession, (req, res) => {
+    let artistId = req.artist.id
     let skillId = req.params.id
     skillId = parseInt(skillId)
     const feedbackFromRequest ={
         rating: req.body.rating,
         comment: req.body.comment,
-        skillId: skillId
+        skillId: skillId,
+        artistId: artistId
         
     }
     console.log(feedbackFromRequest)

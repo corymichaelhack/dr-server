@@ -8,7 +8,6 @@ const validateSession = require('../middleware/validate-session');
 router.post('/create/:id', validateSession, (req, res) => {
     let artistId = req.artist.id
     let skillId = req.params.id
-    let artistId = req.artist.id
     skillId = parseInt(skillId)
     const feedbackFromRequest ={
         rating: req.body.rating,

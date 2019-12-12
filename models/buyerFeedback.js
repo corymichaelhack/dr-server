@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull:false
     }
+    
   }, {});
   buyerFeedback.associate = function(models) {
     // associations can be defined here

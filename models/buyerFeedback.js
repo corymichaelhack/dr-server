@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
     skillId:{
       type: DataTypes.INTEGER,
       allowNull:false
+    },
+    artistId:{
+      type: DataTypes.INTEGER,
+      allowNull:false
     }
   }, {});
   buyerFeedback.associate = function(models) {

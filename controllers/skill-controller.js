@@ -108,17 +108,10 @@ router.delete('/delete/:id', validateSession, function (req, res) {
     let skill = req.params.id;
     let artistId = req.artist.id;
 
-    Skill
-    .destroy ({
+    Skill.destroy ({
         where: {id: skill, artistId: artistId}
-    }).then(
-        function deleteSkillSuccess() {
-            res.status(200).send( `you removed skillId: ${skill} from artistId: ${artistId}`)
-        },
-        function deleteSkillError(err){
-            res.send(500, err.message)
-        }
-    )
+    }).then(artist => res.status(200).json(artist))
+    .catch(err => res.json(req.errors))   
 })
 
 //**UPDATE SKILL FOR SPECIFIC ARTIST */

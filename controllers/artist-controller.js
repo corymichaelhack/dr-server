@@ -58,7 +58,7 @@ router.post('/login', (req, res) => {
 //*GET ALL ARTISTS*/
 router.get('/getartists', function (req, res) {
    
-    Artist.findAll({include: ['skills']})                             //in future, change to ONLY bring back "artists"
+    Artist.findAll({include: ['skills', 'buyerFeedbacks']})                             //in future, change to ONLY bring back "artists"
     .then(artist => res.status(200).json(artist))   //
     .catch(err => res.status(500).json({error:err}))
 })

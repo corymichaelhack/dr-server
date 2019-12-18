@@ -29,8 +29,8 @@ Artist.hasMany(Skill);
 BuyerFeedback.belongsTo(Skill);
 Skill.hasMany(BuyerFeedback);
 
-// BuyerFeedback.hasOne(SellerResponse);
-// SellerResponse.belongsTo(BuyerFeedback);
+BuyerFeedback.belongsTo(Artist);
+Artist.hasMany(BuyerFeedback)
 
 
 

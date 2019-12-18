@@ -58,7 +58,7 @@ router.post('/login', (req, res) => {
 //*GET ALL ARTISTS*/
 router.get('/getartists', function (req, res) {
    
-    Artist.findAll({include: ['skills', 'buyerFeedbacks']})                             //in future, change to ONLY bring back "artists"
+    Artist.findAll({include: ['skills','buyerFeedbacks']})                           
     .then(artist => res.status(200).json(artist))   //
     .catch(err => res.status(500).json({error:err}))
 })
@@ -66,7 +66,7 @@ router.get('/getartists', function (req, res) {
 //*GET ONE ARTIST**/
 router.get('/:id', function (req, res) {
     let data = req.params.id;
-    Artist.findOne({where: { id: data}, include: ['skills']})
+    Artist.findOne({where: { id: data}, include: ['skills', 'buyerFeedbacks']})
     .then(artist => res.status(200).json(artist))   //
     .catch(err => res.status(500).json({error:err}))
 })

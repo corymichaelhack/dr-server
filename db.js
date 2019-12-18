@@ -19,6 +19,10 @@ Skill = sequelize.import('./models/skill');
 BuyerFeedback= sequelize.import('./models/buyerFeedback');
 SellerResponse= sequelize.import('./models/sellerResponse');
 
+
+
+
+
 Skill.belongsTo(Artist);
 Artist.hasMany(Skill);
 
